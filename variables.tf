@@ -47,6 +47,10 @@ variable "logging_enabled" {
   default     = false
 }
 
+variable "logging_bucket_name" {
+  default = null
+}
+
 # ACLs
 variable "default_acl" {
   description = "Configure this ACL to be the default ACL. See https://cloud.google.com/storage/docs/access-control/lists for more details."

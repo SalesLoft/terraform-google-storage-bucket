@@ -26,13 +26,13 @@ resource "google_storage_bucket" "bucket" {
 
   # TODO Should be set to "${var.prevent_destroy}" once https://github.com/hashicorp/terraform/issues/3116 is fixed.
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 
   lifecycle_rule = "${var.lifecycle_rules}"
 
   logging {
-    log_bucket = "${local.log_bucket_name}"
+    log_bucket = var.logging_bucket_name != null ? var.logging_bucket_name : local.log_bucket_name
   }
 
   versioning {
@@ -52,15 +52,15 @@ resource "google_storage_bucket" "logging" {
 
   # TODO Should be set to "${var.prevent_destroy}" once https://github.com/hashicorp/terraform/issues/3116 is fixed.
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true
   }
 
   lifecycle_rule {
-    "action" {
+    action {
       type = "Delete"
     }
 
-    "condition" {
+    condition {
       age = 60
     }
   }
